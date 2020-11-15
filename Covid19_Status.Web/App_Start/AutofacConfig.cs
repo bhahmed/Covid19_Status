@@ -25,6 +25,8 @@ namespace Covid19_Status.Web.App_Start
             builder.RegisterSource(new ViewRegistrationSource());
 
             builder.RegisterType<CountryService>().AsSelf().InstancePerRequest();
+            builder.RegisterType<CovidStatusService>().AsSelf().InstancePerRequest();
+            // builder.RegisterType<ApiHelper>().AsSelf().SingleInstance();
 
             var container = builder.Build();
             var resolver = new AutofacDependencyResolver(container);

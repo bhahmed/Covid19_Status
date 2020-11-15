@@ -7,11 +7,12 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Covid19_Status.Services;
 using Covid19_Status.Web.App_Start;
 
 namespace Covid19_Status.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -21,6 +22,7 @@ namespace Covid19_Status.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ApiHelper.InitializeClient();
         }
     }
 }
