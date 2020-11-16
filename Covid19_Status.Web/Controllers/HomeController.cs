@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Covid19_Status.Models;
 using Covid19_Status.Services;
+using Covid19_Status.Web.Models;
 
 namespace Covid19_Status.Web.Controllers
 {
@@ -28,10 +29,11 @@ namespace Covid19_Status.Web.Controllers
             return View();
         }
 
-        public async Task<ActionResult> About()
+        [HttpPost]
+        public async Task<ActionResult> About(Filters filters)
         {
-            await this._covidStatusService.GetStatus("south-africa", new DateTime(2020,03,01), new DateTime(2020, 11, 15));
-
+            List<CovidStatus> covidStatuses = await this._covidStatusService.GetStatus(filters.Country, filters.From, filters.To);
+            ViewBag.Results = covidStatuses;
             return View();
         }
 

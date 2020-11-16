@@ -14,7 +14,8 @@ namespace Covid19_Status.Services
 
         public async Task<List<CovidStatus>> GetStatus(string country, DateTime from, DateTime to)
         {
-            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync($"{url}{country}?from={from}&to={to}"))
+            string fullUrl = $"{url}{country}?from={@from:yyyy-MM-ddTHH:mm:ss}&to={@to:yyyy-MM-ddTHH:mm:ss}";
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(fullUrl))
             {
                 if (response.IsSuccessStatusCode)
                 {

@@ -1,7 +1,63 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+
+<div id="chart_container" style="border: 1px solid #da70d6; padding: 4px; border-radius: 10px;margin: 10px">
+    <canvas id="myChart">
+
+    </canvas>
+</div>
+
+<script>
+    var results = @Html.Raw(Json.Encode(ViewBag.Results));
+    console.log(results);
+    var labels = [];
+    var data = [];
+    results.forEach(item => {
+        labels.push(new Date(parseInt(item.Date.substr(6))).toLocaleString());
+        data.push({
+            t: new Date(parseInt(item.Date.substr(6))),
+            y: item.Active
+        });
+    });
+    console.log(labels);
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Active Cases',
+                data: data/*,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ]*/,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }]
+            }
+        }
+    });
+</script>
